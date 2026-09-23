@@ -3,18 +3,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { scrollToId } from "../../hooks/useLenis";
-
-const LINKS = [
-  { label: "Inicio", id: "inicio" },
-  { label: "Servicios", id: "servicios" },
-  { label: "Productos", id: "productos" },
-  { label: "Nosotros", id: "nosotros" },
-  { label: "Contacto", id: "contacto" },
-];
+import { useLang } from "../../i18n/LanguageContext";
 
 export const Navbar = () => {
+  const { t, lang, toggle } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const LINKS = [
+    { label: t.nav.inicio, id: "inicio" },
+    { label: t.nav.servicios, id: "servicios" },
+    { label: t.nav.productos, id: "productos" },
+    { label: t.nav.nosotros, id: "nosotros" },
+    { label: t.nav.aliados, id: "aliados" },
+    { label: t.nav.contacto, id: "contacto" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -26,6 +29,19 @@ export const Navbar = () => {
     setOpen(false);
     scrollToId(id);
   };
+
+  const LangToggle = ({ testid }) => (
+    <button
+      onClick={toggle}
+      data-testid={testid}
+      className="flex items-center gap-1 font-mono-accent text-[11px] uppercase tracking-[0.2em] text-white"
+      aria-label="Cambiar idioma / Switch language"
+    >
+      <span className={lang === "es" ? "text-[#00E5FF]" : "text-white/40"}>ES</span>
+      <span className="text-white/30">/</span>
+      <span className={lang === "en" ? "text-[#00E5FF]" : "text-white/40"}>EN</span>
+    </button>
+  );
 
   return (
     <motion.header
@@ -48,7 +64,7 @@ export const Navbar = () => {
           <Logo />
         </button>
 
-        <div className="hidden items-center gap-9 md:flex">
+        <div className="hidden items-center gap-8 lg:flex">
           {LINKS.map((l) => (
             <button
               key={l.id}
@@ -62,22 +78,28 @@ export const Navbar = () => {
           ))}
         </div>
 
-        <button
-          onClick={() => go("contacto")}
-          data-testid="nav-cta"
-          className="hidden items-center gap-2 rounded-full bg-[#00E5FF] px-5 py-2.5 font-mono-accent text-[11px] uppercase tracking-[0.2em] text-[#050505] transition-transform duration-300 hover:scale-[1.04] md:flex"
-        >
-          Cotizar
-        </button>
+        <div className="hidden items-center gap-6 lg:flex">
+          <LangToggle testid="lang-toggle-desktop" />
+          <button
+            onClick={() => go("contacto")}
+            data-testid="nav-cta"
+            className="rounded-full bg-[#00E5FF] px-5 py-2.5 font-mono-accent text-[11px] uppercase tracking-[0.2em] text-[#050505] transition-transform duration-300 hover:scale-[1.04]"
+          >
+            {t.nav.cotizar}
+          </button>
+        </div>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          data-testid="nav-mobile-toggle"
-          className="text-white md:hidden"
-          aria-label="Menú"
-        >
-          {open ? <X size={26} /> : <Menu size={26} />}
-        </button>
+        <div className="flex items-center gap-5 lg:hidden">
+          <LangToggle testid="lang-toggle-mobile" />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            data-testid="nav-mobile-toggle"
+            className="text-white"
+            aria-label="Menú"
+          >
+            {open ? <X size={26} /> : <Menu size={26} />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -87,7 +109,7 @@ export const Navbar = () => {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-white/10 bg-[#050505] md:hidden"
+            className="overflow-hidden border-t border-white/10 bg-[#050505] lg:hidden"
             data-testid="mobile-menu"
           >
             <div className="flex flex-col gap-1 px-6 py-6">
@@ -106,7 +128,7 @@ export const Navbar = () => {
                 className="mt-4 rounded-full bg-[#00E5FF] px-5 py-3 font-mono-accent text-xs uppercase tracking-[0.2em] text-[#050505]"
                 data-testid="mobile-cta"
               >
-                Solicitar Cotización
+                {t.nav.cotizar}
               </button>
             </div>
           </motion.div>

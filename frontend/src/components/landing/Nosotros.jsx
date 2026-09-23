@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { useLang } from "../../i18n/LanguageContext";
 
-const STATS = [
-  { value: 50, suffix: "+", label: "Rutas internacionales" },
-  { value: 1.2, suffix: "M", label: "Unidades distribuidas", decimals: 1 },
-  { value: 99.4, suffix: "%", label: "Entregas a tiempo", decimals: 1 },
-  { value: 24, suffix: "/7", label: "Operación continua" },
+const VALUES = [
+  { value: 50, suffix: "+", decimals: 0 },
+  { value: 1.2, suffix: "M", decimals: 1 },
+  { value: 99.4, suffix: "%", decimals: 1 },
+  { value: 24, suffix: "/7", decimals: 0 },
 ];
 
 const Counter = ({ value, suffix, decimals = 0 }) => {
@@ -37,36 +38,30 @@ const Counter = ({ value, suffix, decimals = 0 }) => {
 };
 
 export const Nosotros = () => {
+  const { t } = useLang();
   return (
-    <section
-      id="nosotros"
-      className="relative border-t border-white/10 bg-[#050505] py-24 md:py-32"
-      data-testid="nosotros"
-    >
+    <section id="nosotros" className="relative border-t border-white/10 bg-[#050505] py-24 md:py-32" data-testid="nosotros">
       <div className="mx-auto max-w-[1400px] px-6 md:px-12">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <div className="mb-6 flex items-center gap-3">
               <span className="h-px w-10 bg-[#00E5FF]" />
               <span className="font-mono-accent text-[11px] uppercase tracking-[0.3em] text-[#00E5FF]">
-                Nosotros
+                {t.nosotros.overline}
               </span>
             </div>
             <h2 className="font-display text-4xl font-600 leading-[1.02] tracking-tighter text-white sm:text-5xl lg:text-6xl">
-              Infraestructura que
+              {t.nosotros.titleA}
               <br />
-              <span className="text-stroke-cyan">escala contigo.</span>
+              <span className="text-stroke-cyan">{t.nosotros.titleB}</span>
             </h2>
             <p className="mt-8 max-w-lg font-body text-base leading-relaxed text-[#9CA3AF]">
-              FERINFECTED CORP, S.A.P.I. de C.V. es un operador integral de
-              electrónica de consumo. Conectamos fabricantes, distribuidores y
-              retail mediante una plataforma logística propia —{" "}
-              <span className="text-white">FLUX</span> — que garantiza
-              trazabilidad, velocidad y cumplimiento en cada envío.
+              {t.nosotros.p1a}
+              <span className="text-white">FLUX</span>
+              {t.nosotros.p1b}
             </p>
             <p className="mt-5 max-w-lg font-body text-base leading-relaxed text-[#9CA3AF]">
-              Del despacho aduanal a la última milla, operamos con estándares
-              corporativos y precisión tecnológica.
+              {t.nosotros.p2}
             </p>
           </div>
 
@@ -87,9 +82,9 @@ export const Nosotros = () => {
         </div>
 
         <div className="mt-20 grid grid-cols-2 gap-8 border-t border-white/10 pt-12 lg:grid-cols-4">
-          {STATS.map((s, i) => (
+          {VALUES.map((s, i) => (
             <motion.div
-              key={s.label}
+              key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
@@ -97,14 +92,10 @@ export const Nosotros = () => {
               data-testid={`stat-${i}`}
             >
               <div className="font-display text-5xl font-600 tracking-tighter text-white md:text-6xl lg:text-7xl">
-                <Counter
-                  value={s.value}
-                  suffix={s.suffix}
-                  decimals={s.decimals}
-                />
+                <Counter value={s.value} suffix={s.suffix} decimals={s.decimals} />
               </div>
               <p className="mt-3 font-mono-accent text-[10px] uppercase tracking-[0.2em] text-[#9CA3AF]">
-                {s.label}
+                {t.nosotros.stats[i]}
               </p>
             </motion.div>
           ))}

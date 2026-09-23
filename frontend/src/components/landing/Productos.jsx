@@ -1,52 +1,38 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Smartphone, Gamepad2, Laptop, Tv, ArrowUpRight } from "lucide-react";
+import { useLang } from "../../i18n/LanguageContext";
+import { BRANDS } from "../../i18n/translations";
 
-const PRODUCTS = [
-  {
-    id: "celulares",
-    label: "Celulares",
-    tag: "Smartphones & Wearables",
-    count: "+80 modelos",
+const META = {
+  celulares: {
     icon: Smartphone,
     image:
       "https://images.unsplash.com/photo-1511140973288-19bf21d7e771?auto=format&fit=crop&w=1400&q=80",
-    desc: "Flagships y gama media de las principales marcas, con garantía y volumen para retail y mayoreo.",
   },
-  {
-    id: "consolas",
-    label: "Consolas",
-    tag: "Gaming & Accesorios",
-    count: "Todas las plataformas",
+  consolas: {
     icon: Gamepad2,
     image:
       "https://images.pexels.com/photos/1337247/pexels-photo-1337247.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400",
-    desc: "Consolas de última generación, controles y periféricos con disponibilidad constante.",
   },
-  {
-    id: "laptops",
-    label: "Laptops",
-    tag: "Cómputo & Movilidad",
-    count: "Consumo y empresa",
+  laptops: {
     icon: Laptop,
     image:
       "https://images.pexels.com/photos/14483025/pexels-photo-14483025.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400",
-    desc: "Portátiles de rendimiento, ultrabooks y equipos corporativos listos para despliegue.",
   },
-  {
-    id: "tvs",
-    label: "Smart TVs",
-    tag: "Pantallas & Video",
-    count: 'Hasta 98"',
+  tvs: {
     icon: Tv,
     image:
       "https://images.pexels.com/photos/5202925/pexels-photo-5202925.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400",
-    desc: "Televisores 4K/8K y pantallas comerciales con logística especializada de gran formato.",
   },
-];
+};
+
+const ORDER = ["celulares", "consolas", "laptops", "tvs"];
 
 export const Productos = () => {
-  const [active, setActive] = useState(PRODUCTS[0]);
+  const { t } = useLang();
+  const [activeId, setActiveId] = useState("celulares");
+  const active = { id: activeId, ...META[activeId], ...t.productos.items[activeId] };
 
   return (
     <section
@@ -60,26 +46,26 @@ export const Productos = () => {
         <div className="mb-14 flex items-center gap-3">
           <span className="h-px w-10 bg-[#00E5FF]" />
           <span className="font-mono-accent text-[11px] uppercase tracking-[0.3em] text-[#00E5FF]">
-            Catálogo FLUX
+            {t.productos.overline}
           </span>
         </div>
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
-          {/* Selector list */}
           <div className="lg:col-span-5">
             <h2 className="mb-10 font-display text-4xl font-600 leading-[1] tracking-tighter text-white sm:text-5xl">
-              Tecnología que movemos.
+              {t.productos.title}
             </h2>
             <div className="flex flex-col">
-              {PRODUCTS.map((p) => {
-                const Icon = p.icon;
-                const isActive = active.id === p.id;
+              {ORDER.map((id) => {
+                const Icon = META[id].icon;
+                const item = t.productos.items[id];
+                const isActive = activeId === id;
                 return (
                   <button
-                    key={p.id}
-                    onMouseEnter={() => setActive(p)}
-                    onClick={() => setActive(p)}
-                    data-testid={`product-item-${p.id}`}
+                    key={id}
+                    onMouseEnter={() => setActiveId(id)}
+                    onClick={() => setActiveId(id)}
+                    data-testid={`product-item-${id}`}
                     className={`group flex items-center justify-between border-b border-white/10 py-6 text-left transition-colors duration-300 ${
                       isActive ? "border-[#00E5FF]/40" : ""
                     }`}
@@ -98,10 +84,10 @@ export const Productos = () => {
                             isActive ? "text-white" : "text-white/50"
                           }`}
                         >
-                          {p.label}
+                          {item.label}
                         </span>
                         <span className="font-mono-accent text-[10px] uppercase tracking-[0.2em] text-[#6B7280]">
-                          {p.tag}
+                          {item.tag}
                         </span>
                       </div>
                     </div>
@@ -119,7 +105,6 @@ export const Productos = () => {
             </div>
           </div>
 
-          {/* Spotlight image frame */}
           <div className="lg:col-span-7">
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0C0C0C]">
               <AnimatePresence mode="wait">
@@ -131,11 +116,7 @@ export const Productos = () => {
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute inset-0"
                 >
-                  <img
-                    src={active.image}
-                    alt={active.label}
-                    className="h-full w-full object-cover"
-                  />
+                  <img src={active.image} alt={active.label} className="h-full w-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
                 </motion.div>
               </AnimatePresence>
@@ -158,6 +139,33 @@ export const Productos = () => {
                   </motion.div>
                 </AnimatePresence>
               </div>
+            </div>
+
+            {/* Brand / model chips */}
+            <div className="mt-6">
+              <span className="font-mono-accent text-[10px] uppercase tracking-[0.25em] text-[#6B7280]">
+                {t.productos.modelsLabel}
+              </span>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.id + "-brands"}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="mt-4 flex flex-wrap gap-2.5"
+                  data-testid={`product-brands-${active.id}`}
+                >
+                  {BRANDS[active.id].map((b) => (
+                    <span
+                      key={b}
+                      className="rounded-full border border-white/10 bg-[#0C0C0C] px-4 py-2 font-body text-sm text-[#D1D5DB] transition-colors duration-300 hover:border-[#00E5FF]/50 hover:text-white"
+                    >
+                      {b}
+                    </span>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
