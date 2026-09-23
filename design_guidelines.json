@@ -1,0 +1,116 @@
+{
+  "theme": {
+    "mode": "dark",
+    "archetype": "Swiss & High-Contrast + Electric & Neon",
+    "description": "Premium, high-contrast dark theme with sharp, technical precision. Conveys authority, speed, and cutting-edge logistics. Avoids 'AI slop' by using aggressive asymmetry and avoiding generic gradients."
+  },
+  "typography": {
+    "headings": {
+      "family": "'Clash Display', sans-serif",
+      "weights": ["400", "500", "600", "700"],
+      "usage": "Use for all H1-H4. H1 MUST be `tracking-tighter`. Never center-align hero headings. Do NOT use Inter or Roboto."
+    },
+    "body": {
+      "family": "'Manrope', sans-serif",
+      "weights": ["400", "500"],
+      "usage": "Use for all body text and paragraphs. `leading-relaxed`."
+    },
+    "mono_accents": {
+      "family": "'IBM Plex Mono', monospace",
+      "weights": ["400", "600"],
+      "usage": "Use for overlines, labels, metrics, button text, and tech stats. Always uppercase, `tracking-[0.2em]`, `text-xs`."
+    }
+  },
+  "colors": {
+    "background": {
+      "default": "#050505",
+      "surface": "#121212",
+      "surface_elevated": "#1A1A1A"
+    },
+    "text": {
+      "primary": "#F9FAFB",
+      "secondary": "#9CA3AF",
+      "muted": "#6B7280"
+    },
+    "brand": {
+      "primary": "#00E5FF",
+      "secondary": "#333333",
+      "accent": "#FF3366"
+    },
+    "borders": {
+      "default": "rgba(255,255,255,0.1)",
+      "hover": "rgba(0, 229, 255, 0.5)"
+    }
+  },
+  "layouts": {
+    "spacing": "Generous spacing using Tailwind scale: p-8, p-12, p-16, py-24, py-32. Container mx-auto px-6 md:px-12.",
+    "grid_system": "Use 'The Bento Grid Protocol (Mode A - Tetris Grid)'. grid-cols-1 md:grid-cols-8 lg:grid-cols-12 with wide gaps (gap-8 or gap-12). Aggressive asymmetry.",
+    "alignment": "Strictly left-aligned text for paragraphs and headings unless specific symmetry dictates otherwise."
+  },
+  "visual_enhancers": {
+    "surfaces": "Use 'Grid Borders' style for feature sections. Flat solid surfaces with subtle 1px white/10 border. Avoid pure glassmorphism for heavy data, use solid dark charcoal.",
+    "gradients": "No generic fullscreen gradients. Use subtle radial glows (blur-3xl) behind key elements. Maximum 20% gradient area.",
+    "textures": "Subtle noise overlay (grain) on the background to eliminate digital flatness."
+  },
+  "motion": {
+    "scroll": "MUST use `lenis` for smooth momentum scrolling. It gives the site a premium feel.",
+    "reveals": "Kinetic Hero with on-load masked line-by-line reveal using `framer-motion` (`clip-path` or `overflow-hidden` trick).",
+    "interactions": "Hover states on cards: `-translate-y-2`, border shifts to brand primary, subtle box-shadow glow.",
+    "parallax": "Subtle parallax on product images and bento grid elements using Framer Motion."
+  },
+  "components_instructions": {
+    "hero": "Kinetic Hero. Left-aligned massive heading in Clash Display. Masked line-by-line reveal. Subtitle in Manrope. CTA button in IBM Plex Mono. Incorporate subtle 3D/Parallax moment behind text.",
+    "marquee": "The 'Kinetic Texture' marquee using `react-fast-marquee`. Massive outline text (`text-transparent stroke-white/20 stroke-1 text-8xl+`) reading 'IMPORTACIÓN • EXPORTACIÓN • LOGÍSTICA • ALMACENAMIENTO • CONSULTORÍA'.",
+    "services_bento": "4 to 5 cards in an asymmetric Bento grid. Each card has a dark surface, 1px border. Use icons/images. Overlines in Mono font.",
+    "products_showcase": "Spotlight/clipped frames layout. 4 key products (Celulares, Consolas, Laptops, Smart TVs). Real photography. Use hover effects to clip or expand the frame.",
+    "about_stats": "Large typographic stats (`text-6xl+` in Clash Display). Mono font for the metric label. High contrast.",
+    "contact_form": "Visual, editorial contact form. Not a standard stacked layout. Use Shadcn Input/Textarea but styled heavily (flat, border-b only, dark background). Use 'The Tracing Beam' or subtle glow on focus.",
+    "header": "Sticky nav. Solid dark background `#050505` with `border-b border-white/10`. Original SVG Logo Mark 'FERINFECTED CORP'. Links on desktop. No transparent backgrounds over content."
+  },
+  "assets": {
+    "images": {
+      "hero_bg_texture": "https://images.unsplash.com/photo-1613690399151-65ea69478674",
+      "service_import_export": "https://images.pexels.com/photos/27402391/pexels-photo-27402391.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "service_warehousing": "https://images.pexels.com/photos/36522028/pexels-photo-36522028.jpeg",
+      "service_logistics": "https://images.pexels.com/photos/12700835/pexels-photo-12700835.jpeg",
+      "service_consulting": "https://images.pexels.com/photos/36765718/pexels-photo-36765718.jpeg",
+      "product_smartphone": "https://images.unsplash.com/photo-1511140973288-19bf21d7e771",
+      "product_console": "https://images.pexels.com/photos/1337247/pexels-photo-1337247.jpeg",
+      "product_laptop": "https://images.pexels.com/photos/14483025/pexels-photo-14483025.jpeg",
+      "product_smart_tv": "https://images.pexels.com/photos/5202925/pexels-photo-5202925.jpeg"
+    },
+    "icons": "Use `@phosphor-icons/react` (Duotone weight) for high-end tech feel."
+  },
+  "accessibility": {
+    "contrast": "Ensure all text meets WCAG AA 4.5:1 ratio against #050505 or #111111.",
+    "focus": "All interactive elements must have a visible focus ring."
+  },
+  "testing": {
+    "attributes": "All interactive and key informational elements MUST include a `data-testid` attribute in kebab-case."
+  },
+  "instructions_to_main_agent": [
+    "Install required dependencies: framer-motion, @studio-freight/react-lenis (for smooth scrolling), react-fast-marquee, @phosphor-icons/react, lucide-react.",
+    "Do NOT use 'Inter' or 'Roboto' for any text.",
+    "Do NOT use pure #000000; use #050505 for background.",
+    "Implement the 'Kinetic Hero' with a masked line-by-line reveal using Framer Motion's `clip-path` or `overflow-hidden` trick on load.",
+    "Build a custom 'Bento grid' for the Servicios section following the 'Tetris' asymmetry rule. Do not just use a simple 2x2 grid.",
+    "Create a visually distinctive contact form, avoiding default Shadcn looks. Use bottom-borders only or highly stylized flat inputs with glow effects.",
+    "Translate all text into Spanish as requested by the user.",
+    "Add 'data-testid' to all buttons and links.",
+    "Ensure 'FERINFECTED CORP' has a distinct SVG logo mark used in the header and as a favicon."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "You tend to converge toward generic outputs. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "You MUST NOT apply universal transition. Eg: transition: all. Always add transitions for specific interactive elements.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations.",
+    "NEVER use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, custom cursors, selection states, and loading animations separate good from extraordinary.",
+    "NEVER use placeholder URLs. Use the provided image URLs."
+  ]
+}
